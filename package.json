@@ -1,0 +1,25 @@
+{
+  "name": "vuttr_backend",
+  "version": "1.0.0",
+  "description": "Desafio de BackEnd da BossaBox",
+  "main": "server.js",
+  "repository": "https://github.com/cafesao/desafio_backend.git",
+  "author": "cafesao <gabriel.diasdutra2@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "pg": "^8.0.3",
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
