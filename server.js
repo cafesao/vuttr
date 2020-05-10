@@ -1,15 +1,26 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
-const dbFunctions = require('./src/db/dbFunctions')
+const bodyParser = require('body-parser')
+
+const dbFunctionsTools = require('./src/db/dbFunctionsTools')
+const dbFunctionsAccounts = require('./src/db/dbFunctionsAccounts')
+
+const auth = require('./src/auth/auth')
 
 const server = express()
 const routes = require('./src/routes/routes')
 
-dbFunctions.createTable()
+dbFunctionsTools.createTableTools()
+dbFunctionsAccounts.createTableAccounts()
 
 server.use(cors())
 server.use(express.json())
+server.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+)
 server.use('/api', routes)
 
 server.listen(process.env.PORT, () => {
