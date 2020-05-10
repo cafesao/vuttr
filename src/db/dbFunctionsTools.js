@@ -1,9 +1,7 @@
-const client = require('../db/connection')
-
-client.connect()
+const client = require('./connection')
 
 module.exports = {
-  createTable: () => {
+  createTableTools: () => {
     client.query(
       `
       CREATE TABLE IF NOT EXISTS tools(
