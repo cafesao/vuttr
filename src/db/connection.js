@@ -8,4 +8,6 @@ const client = new Client({
   port: process.env.PGPORT,
 })
 
+client.connect()
+
 module.exports = client
