@@ -1,4 +1,4 @@
-const blacklist = require('./blacklist')
+const blacklist = require('./listaNegra')
 
 const { promisify } = require('util')
 const existsAsync = promisify(blacklist.exists).bind(blacklist)
@@ -21,6 +21,7 @@ module.exports = {
   hasToken: async (token) => {
     const tokenHash = geraTokenHash(token)
     const resultado = await existsAsync(tokenHash)
+
     return resultado === 1
   },
 }

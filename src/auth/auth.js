@@ -1,37 +1,38 @@
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-const BearerStrategy = require('passport-http-bearer').Strategy
 const jwt = require('jsonwebtoken')
 
-const { InvalidArgumentError } = require('../error/error')
-const blacklist = require('../redis/blacklistController')
+const LocalStrategy = require('passport-local').Strategy
+const BearerStrategy = require('passport-http-bearer').Strategy
 
-const dbFunctionsAccounts = require('../db/dbFunctionsAccounts')
+const { ErroArgumentoInvalido } = require('../error/erros')
+const listaNegra = require('../redis/listaNegraControlador')
 
-function verificaUsername(username) {
-  if (username.rows.length === 0) {
-    throw new InvalidArgumentError('Usuario ou senha inválida!')
+const dbContas = require('../db/dbContas')
+
+function verificaUsuario(usuario) {
+  if (usuario.rows.length === 0) {
+    throw new ErroArgumentoInvalido('Usuario ou senha inválida!')
   }
 }
 
-async function verificaPassword(password, passwordHash) {
-  const passwordValid = await bcrypt.compare(password, passwordHash)
-  if (!passwordValid) {
-    throw new InvalidArgumentError('Usuario ou senha inválida!')
+async function verificaSenha(senha, senhaHash) {
+  const senhaValida = await bcrypt.compare(senha, senhaHash)
+  if (!senhaValida) {
+    throw new ErroArgumentoInvalido('Usuario ou senha inválida!')
   }
 }
 
-async function verificaTokenBlacklist(token) {
-  const tokenBlacklist = await blacklist.hasToken(token)
-  if (tokenBlacklist) {
+async function verificaTokenListaNegra(token) {
+  const tokenListaNegra = await listaNegra.hasToken(token)
+  if (tokenListaNegra) {
     throw new jwt.JsonWebTokenError('Token inválido por logout!')
   }
 }
 
-async function verificaConta(username) {
-  const user = await dbFunctionsAccounts.querySelect(username)
-  if (user.rows.length === 0) {
+async function verificaConta(usuario) {
+  const buscarUsuario = await dbContas.buscarConta(usuario)
+  if (buscarUsuario.rows.length === 0) {
     throw new Error('Não existe uma conta vinculada a esse token')
   }
 }
@@ -39,16 +40,16 @@ async function verificaConta(username) {
 passport.use(
   new LocalStrategy(
     {
-      usernameField: 'username',
-      passwordField: 'password',
+      usernameField: 'usuario',
+      passwordField: 'senha',
       session: false,
     },
-    async (username, password, done) => {
+    async (usuario, senha, done) => {
       try {
-        const user = await dbFunctionsAccounts.querySelect(username)
-        verificaUsername(user)
-        await verificaPassword(password, user.rows[0].password)
-        done(null, user)
+        const usuarioBuscar = await dbContas.buscarConta(usuario)
+        verificaUsuario(usuarioBuscar)
+        await verificaSenha(senha, usuarioBuscar.rows[0].senha)
+        done(null, usuarioBuscar)
       } catch (error) {
         done(error)
       }
@@ -59,10 +60,10 @@ passport.use(
 passport.use(
   new BearerStrategy(async (token, done) => {
     try {
-      await verificaTokenBlacklist(token)
-      const { username } = jwt.verify(token, process.env.CHAVE_JWT)
-      verificaConta(username)
-      done(null, username, token)
+      await verificaTokenListaNegra(token)
+      const { usuario } = jwt.verify(token, process.env.CHAVE_JWT)
+      verificaConta(usuario)
+      done(null, usuario, token)
     } catch (error) {
       done(error)
     }

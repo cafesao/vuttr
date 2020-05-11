@@ -6,8 +6,7 @@ const client = new Client({
   database: process.env.PGDATABASE,
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
+  query_timeout: 10000,
 })
-
-client.connect()
 
 module.exports = client
