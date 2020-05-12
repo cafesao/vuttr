@@ -1,0 +1,148 @@
+FORMAT: 1A
+HOST: ec2-54-232-45-139.sa-east-1.compute.amazonaws.com:3000
+
+# API para VUTTR
+
+Esta API tem como foco gerenciar ferramentas de desenvolvimento.
+
+# Group Ferramenta
+
+## Buscar Todas [/api/ferramenta/buscar/todas]
+
+### Buscar todas as ferramentas [GET]
+
+Busca todas as ferramentas que estão registradas no banco de dados.
+
++ Response 200 (application/json)
+    + Attributes (array[resFerramenta])
+
++ Response 404 (application/json)
+    + Attributes (Erro)
+
+## Buscar por tag [/api/ferramenta/buscar/?tag={nome_tag}]
+
++ Parameters
+    + nome_tag: node (string, required) - Nome da tag
+
+### Buscar ferramenta por tag [GET]
+
+Busca todas as ferramentas que correspondem a tag informada no banco de dados.
+
++ Response 200 (application/json)
+    + Attributes (array[resFerramenta])
++ Response 404 (application/json)
+    + Attributes (Erro)
+
+## Adicionar [/api/ferramenta/adicionar]
+
+### Adicionar ferramenta [POST]
+
+Adiciona a ferramenta no banco de dados.
+Essa rota e protegida por JWT, ou seja, precisa de um token que é informado na rota [/conta/entrar],
+para fazer qualquer alteração, neste caso um POST.
+
++ Request Adicionar nova ferramenta
+    + Headers
+
+            Content-Type: application/json
+            Bearer: token
+
+    + Attributes (Ferramenta)
+
++ Response 201 (application/json)
+    + Attributes (Ferramenta)
++ Response 409 (application/json)
+    + Attributes (Erro)
++ Response 400 (application/json)
+    + Attributes (Erro)
+
+## Remover [/api/ferramenta/remover/{id_ferramenta}]
++ Parameters
+    + id_ferramenta: 1 (number, required) - ID da ferramenta
+
+### Remover ferramenta [DELETE]
+
+Remove a ferramenta no banco de dados.
+Essa rota e protegida por JWT, ou seja, precisa de um token que é informado na rota [/conta/entrar],
+para fazer qualquer alteração, neste caso um DELETE.
+
++ Request Remove ferramenta
+    + Headers
+
+            Bearer: token
+
++ Response 204
+
++ Response 404
+    + Attributes (Erro)
+
+# Group Conta
+
+## Criar [/api/conta/cadastro]
+
+### Criar nova conta [POST]
+
+Cria uma nova conta dentro do banco de dados.
+
++ Request Criar conta
+    + Attributes (Conta)
+
++ Response 204
++ Response 409 (application/json)
+    + Attributes (Erro)
++ Response 400 (application/json)
+    + Attributes (Erro)
+
+## Entrar [/api/conta/entrar]
+
+### Entrar na conta [POST]
+
+Entra em uma conta já previamente registrada no banco de dados, assim, feito o login, 
+retorna um token para ser usado em rotas específicas da aplicação.
+
++ Request Entrar conta
+    + Attributes (Conta)
++ Response 204
+    + Headers
+
+            Authorization: token
+
++ Response 406 (application/json)
+    + Attributes (Erro)
++ Response 400 (application/json)
+    + Attributes (Erro)
+
+## Sair [/api/conta/sair]
+
+### Sair da conta [POST]
+
+Saindo de uma conta, utilizando o token, antes informado na rota [/conta/entrar], inutiliza esse token,
+protegendo a rota de pessoas mal intencionadas.
+
++ Request Sair Conta
+    + Headers
+
+            Bearer: token
++ Response 204
++ Response 401 (application/json)
+    + Attributes (Erro)
++ Response 400 (application/json)
+    + Attributes (Erro)
+
+# Data Structures
+
+## Ferramenta (object)
++ title (string) - Titulo da ferramenta
++ link (string) - Link da ferramenta
++ description (string) - Descrição da ferramenta
++ tags (array[string]) - Tags que se relacionam com a ferramenta
+
+## resFerramenta (Ferramenta)
++ id (number) - ID da ferramenta dada pelo banco de dados
+
+## Conta (object)
++ usuario (string) - Usuario da conta
++ senha (string) - Senha da conta
+
+## Erro (object) 
++ erro (string) - Contém o erro
