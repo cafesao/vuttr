@@ -16,7 +16,8 @@ async function iniciar() {
   async function iniciarBD() {
     console.log('[Banco de Dados] : Iniciando ligação com o banco de dados...')
     await client.connect()
-    console.log('[Banco de Dados] : Ligação efetuada com o banco de dados')
+    console.log('[Banco de Dados] : Ligação efetuada com sucesso!')
+    console.log('[Redis] Ligação efetuada com sucesso!')
 
     await dbFerramentas.criarTabelaFerramentas()
     await dbContas.criarTabelaContas()
