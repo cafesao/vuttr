@@ -28,7 +28,7 @@ async function iniciar() {
   function iniciarServidor() {
     console.log('[Servidor] : Iniciando servidor...')
 
-    server.use(cors())
+    server.use(cors({ exposedHeaders: 'Authorization' }))
     server.use(express.json())
     server.use(
       bodyParser.urlencoded({
