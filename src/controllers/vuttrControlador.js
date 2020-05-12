@@ -37,7 +37,7 @@ module.exports = {
         res.json(ferramenta.rows)
       } else {
         res.status(404).json({
-          erro: 'Não foi possivel econtrar a ferramenta com essa tag',
+          erro: 'Não foi possivel encontrar a ferramenta com essa tag',
         })
       }
     } catch (erro) {
@@ -49,23 +49,47 @@ module.exports = {
     try {
       const senhaHash = await bcrypt.hash(senha, 12)
       await dbContas.criarConta(usuario, senhaHash)
-      res.status(201).send()
-    } catch (error) {
-      res.status(500).json({ erro: error.message })
+      res.status(204).send()
+    } catch (erro) {
+      if (erro.code == 23505) {
+        res.status(409).json({ erro: 'Ja existe uma conta com esse usuario!' })
+      } else if (erro.code == 23502) {
+        res
+          .status(400)
+          .json({ erro: 'Esta faltando argumentos em sua requisição' })
+      } else {
+        res.status(500).send()
+        console.log('[Server] ERROR!!')
+        console.log(erro)
+      }
     }
   },
   entrar: async (req, res) => {
-    const token = criaTokenJWT(req.usuario)
-    res.set('Authorization', token)
-    res.status(204).send()
+    try {
+      const token = criaTokenJWT(req.usuario)
+      res.set('Authorization', token)
+      res.status(204).send()
+    } catch (erro) {
+      if (!req.usuario) {
+        res
+          .status(400)
+          .json({ erro: 'Esta faltando argumentos em sua requisição' })
+      } else {
+        res.status(500).send()
+        console.log('[Server] ERROR!!')
+        console.log(erro)
+      }
+    }
   },
   sair: async (req, res) => {
     try {
       const token = req.info
       await listaNegra.add(token)
       res.status(204).send()
-    } catch (error) {
-      res.status(500).json(error)
+    } catch (erro) {
+      res.status(500).send(erro)
+      console.log('[Server] ERROR!!')
+      console.log(erro)
     }
   },
   criarFerramenta: async (req, res) => {
@@ -77,7 +101,7 @@ module.exports = {
         description,
         tags,
       )
-      res.json(ferramenta.rows[0])
+      res.status(201).json(ferramenta.rows[0])
     } catch (erro) {
       if (erro.code == 23505) {
         res
