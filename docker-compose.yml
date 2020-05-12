@@ -1,0 +1,26 @@
+version: '3'
+services:
+  server:
+    build: .
+    ports:
+      - '3000:3000'
+    command: yarn start
+    depends_on:
+      - postgres_db
+      - redis-server_db
+
+  postgres_db:
+    image: postgres
+    ports:
+      - '15432:5432'
+    volumes:
+      - /data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: '123456'
+      POSTGRES_DB: 'vuttr'
+
+  redis-server_db:
+    image: redis
+    command: redis-server
+    ports:
+      - '6379:6379'
