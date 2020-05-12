@@ -21,7 +21,7 @@ module.exports = {
   },
   criarConta: async (usuario, senha) => {
     try {
-      return await client.query(
+      return client.query(
         `
           INSERT INTO conta (usuario, senha)
             VALUES 
