@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Desafio de BackEnd da BossaBox",
   "main": "servidor.js",
-  "repository": "https://github.com/cafesao/desafio_backend.git",
+  "repository": "https://github.com/cafesao/vuttr.git",
   "author": "cafesao <gabriel.diasdutra2@gmail.com>",
   "license": "MIT",
   "scripts": {
