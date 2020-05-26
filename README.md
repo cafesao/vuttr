@@ -36,6 +36,6 @@ Troque a **CHAVE_JWT** que esta dentro do arquivo .env, na raiz do projeto.
 
 Essa chave serve para "assinar" os tokens, para criar uma nova, você pode utilizar o nodeJS + script que esta dentro da pasta tools
 
-Para isso apenas acesse a pasta tools via terminal, e digite `node gerarJWT.js` e espere, ele ira devolver uma chave JWT, com ela em mãos, apenas troque a chave dentro do arquivo .env.
+Para isso apenas acesse a pasta tools via terminal, e digite `node gerateJWT.js` e espere, ele ira devolver uma chave JWT, com ela em mãos, apenas troque a chave dentro do arquivo .env
 
 ![Image](https://i.imgur.com/QHUE32T.jpg)
