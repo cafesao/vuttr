@@ -2,24 +2,20 @@ const express = require('express')
 
 const routes = express.Router()
 
-const vuttrControlador = require('../controllers/vuttrControlador')
+const vuttrController = require('../controllers/vuttrController')
 const middlewareAuth = require('../auth/middlewareAuth')
 
-routes.get('/ferramenta/buscar/todas', vuttrControlador.todasFerramentas)
-routes.get('/ferramenta/buscar/', vuttrControlador.selecionarFerramenta)
-routes.post(
-  '/ferramenta/adicionar',
-  middlewareAuth.bearer,
-  vuttrControlador.criarFerramenta,
-)
+routes.get('/tool/search/all', vuttrController.allTools)
+routes.get('/tool/search/', vuttrController.selectTool)
+routes.post('/tool/add', middlewareAuth.bearer, vuttrController.createTool)
 routes.delete(
-  '/ferramenta/remover/:id',
+  '/tool/remove/:id',
   middlewareAuth.bearer,
-  vuttrControlador.deletarFerramenta,
+  vuttrController.deleteTool,
 )
 
-routes.post('/conta/cadastro', vuttrControlador.registrar)
-routes.post('/conta/entrar', middlewareAuth.local, vuttrControlador.entrar)
-routes.post('/conta/sair', middlewareAuth.bearer, vuttrControlador.sair)
+routes.post('/account/register', vuttrController.register)
+routes.post('/account/login', middlewareAuth.local, vuttrController.login)
+routes.post('/account/logout', middlewareAuth.bearer, vuttrController.logout)
 
 module.exports = routes

@@ -1,14 +1,14 @@
 {
   "name": "vuttr_backend",
   "version": "1.0.0",
-  "description": "Desafio de BackEnd da BossaBox",
-  "main": "servidor.js",
+  "description": "BossaBox BackEnd Challenge",
+  "main": "server.js",
   "repository": "https://github.com/cafesao/vuttr.git",
   "author": "cafesao <gabriel.diasdutra2@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "start": "node servidor.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

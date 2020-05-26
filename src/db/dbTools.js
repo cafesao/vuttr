@@ -1,12 +1,12 @@
-const client = require('./conexao')
+const client = require('./connection')
 
 module.exports = {
-  criarTabelaFerramentas: async () => {
+  createTableTools: async () => {
     try {
-      console.log('[Banco de dados] : Criando a tabela Ferramenta')
+      console.log('[Database] : Creating the Tool table')
       await client.query(
         `
-      CREATE TABLE IF NOT EXISTS ferramenta(
+      CREATE TABLE IF NOT EXISTS tool(
         id SERIAL PRIMARY KEY,
         title VARCHAR NOT NULL UNIQUE,
         link VARCHAR NOT NULL,
@@ -15,40 +15,40 @@ module.exports = {
       )
       `,
       )
-      console.log('[Banco de dados] : Tabela criada!')
+      console.log('[Database] : Table created!')
     } catch (error) {
-      console.log('[Banco de dados] ERROR!!')
+      console.log('[Database] ERROR!!')
       console.error(error)
     }
   },
-  buscarFerramentas: async () => {
+  searchTools: async () => {
     try {
-      return await client.query(`SELECT * FROM ferramenta`)
+      return await client.query(`SELECT * FROM tool`)
     } catch (error) {
-      console.log('[Banco de dados] ERROR!!')
+      console.log('[Database] ERROR!!')
       console.error(error)
     }
   },
-  buscarFerramentaSelecionada: async (tag) => {
+  searchSelectedTool: async (tag) => {
     try {
       return await client.query(
         `
           SELECT *
-          FROM ferramenta
+          FROM tool
           WHERE tags @> ARRAY[$1]::text[]
         `,
         [tag],
       )
     } catch (error) {
-      console.log('[Banco de dados] ERROR!!')
+      console.log('[Database] ERROR!!')
       console.error(error)
     }
   },
-  criarFerramenta: async (title, link, description, tags) => {
+  createTool: async (title, link, description, tags) => {
     try {
       return client.query(
         `
-        INSERT INTO ferramenta (title, link, description, tags)
+        INSERT INTO tool (title, link, description, tags)
           VALUES 
           ($1, $2, $3, $4)
         RETURNING *
@@ -56,20 +56,20 @@ module.exports = {
         [title, link, description, tags],
       )
     } catch (error) {
-      console.log('[Banco de dados] ERROR!!')
+      console.log('[Database] ERROR!!')
       console.error(error)
     }
   },
-  deletarFerramenta: async (id) => {
+  deleteTool: async (id) => {
     try {
       return client.query(
         `
-        DELETE FROM ferramenta where id=$1
+        DELETE FROM tool where id=$1
         `,
         [id],
       )
     } catch (error) {
-      console.log('[Banco de dados] ERROR!!')
+      console.log('[Database] ERROR!!')
       console.error(error)
     }
   },

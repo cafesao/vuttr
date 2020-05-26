@@ -5,13 +5,13 @@ module.exports = {
     passport.authenticate(
       'local',
       { session: false },
-      (erro, usuario, info) => {
-        if (erro && erro.name === 'ErroArgumentoInvalido') {
-          res.status(406).json({ erro: erro.message })
-        } else if (erro) {
-          res.status(500).json({ erro: erro.message })
+      (error, username, info) => {
+        if (error && error.name === 'ErrorArgumentInvalid') {
+          res.status(406).json({ error: error.message })
+        } else if (error) {
+          res.status(500).json({ error: error.message })
         } else {
-          req.usuario = usuario
+          req.username = username
           return next()
         }
       },
@@ -21,20 +21,20 @@ module.exports = {
     passport.authenticate(
       'bearer',
       { session: false },
-      (erro, usuario, info) => {
-        if (erro && erro.name === 'JsonWebTokenError') {
-          return res.status(401).json({ erro: erro.message })
+      (error, username, info) => {
+        if (error && error.name === 'JsonWebTokenError') {
+          return res.status(401).json({ error: error.message })
         }
-        if (erro && erro.name === 'TokenExpiredError') {
+        if (error && error.name === 'TokenExpiredError') {
           return res
             .status(401)
-            .json({ erro: erro.message, expiradoEm: erro.expiredAt })
+            .json({ error: error.message, expiradoEm: error.expiredAt })
         }
-        if (erro) {
-          return res.status(500).json({ erro: erro.message })
+        if (error) {
+          return res.status(500).json({ error: error.message })
         }
-        if (!usuario) {
-          return res.status(400).json({ erro: 'Não foi informado o token' })
+        if (!username) {
+          return res.status(400).json({ error: 'Token was not entered' })
         }
         req.info = info
         return next()
