@@ -7,7 +7,7 @@ Esta API tem como foco gerenciar ferramentas de desenvolvimento.
 
 # Group Ferramenta
 
-## Buscar Todas [/api/ferramenta/buscar/todas]
+## Buscar Todas [/api/tool/search/all]
 
 ### Buscar todas as ferramentas [GET]
 
@@ -19,10 +19,10 @@ Busca todas as ferramentas que estão registradas no banco de dados.
 + Response 404 (application/json)
     + Attributes (Erro)
 
-## Buscar por tag [/api/ferramenta/buscar/?tag={nome_tag}]
+## Buscar por tag [/api/tool/search/?tag={name_tag}]
 
 + Parameters
-    + nome_tag: node (string, required) - Nome da tag
+    + name_tag: node (string, required) - Nome da tag
 
 ### Buscar ferramenta por tag [GET]
 
@@ -33,7 +33,7 @@ Busca todas as ferramentas que correspondem a tag informada no banco de dados.
 + Response 404 (application/json)
     + Attributes (Erro)
 
-## Adicionar [/api/ferramenta/adicionar]
+## Adicionar [/api/tool/add]
 
 ### Adicionar ferramenta [POST]
 
@@ -56,9 +56,9 @@ para fazer qualquer alteração, neste caso um POST.
 + Response 400 (application/json)
     + Attributes (Erro)
 
-## Remover [/api/ferramenta/remover/{id_ferramenta}]
+## Remover [/api/tool/remove/{id_tool}]
 + Parameters
-    + id_ferramenta: 1 (number, required) - ID da ferramenta
+    + id_tool: 1 (number, required) - ID da ferramenta
 
 ### Remover ferramenta [DELETE]
 
@@ -78,7 +78,7 @@ para fazer qualquer alteração, neste caso um DELETE.
 
 # Group Conta
 
-## Criar [/api/conta/cadastro]
+## Criar [/api/account/register]
 
 ### Criar nova conta [POST]
 
@@ -93,7 +93,7 @@ Cria uma nova conta dentro do banco de dados.
 + Response 400 (application/json)
     + Attributes (Erro)
 
-## Entrar [/api/conta/entrar]
+## Entrar [/api/account/login]
 
 ### Entrar na conta [POST]
 
@@ -112,7 +112,7 @@ retorna um token para ser usado em rotas específicas da aplicação.
 + Response 400 (application/json)
     + Attributes (Erro)
 
-## Sair [/api/conta/sair]
+## Sair [/api/account/logout]
 
 ### Sair da conta [POST]
 
