@@ -7,7 +7,7 @@ Esta API tem como foco gerenciar ferramentas de desenvolvimento.
 
 # Group Ferramenta
 
-## Buscar Todas [/api/tool/search/all]
+## Buscar Todas [/api/tools]
 
 ### Buscar todas as ferramentas [GET]
 
@@ -19,7 +19,7 @@ Busca todas as ferramentas que estão registradas no banco de dados.
 + Response 404 (application/json)
     + Attributes (Erro)
 
-## Buscar por tag [/api/tool/search/?tag={name_tag}]
+## Buscar por tag [/api/tools/tag/?tag={name_tag}]
 
 + Parameters
     + name_tag: node (string, required) - Nome da tag
@@ -33,7 +33,7 @@ Busca todas as ferramentas que correspondem a tag informada no banco de dados.
 + Response 404 (application/json)
     + Attributes (Erro)
 
-## Adicionar [/api/tool/add]
+## Adicionar [/api/tools]
 
 ### Adicionar ferramenta [POST]
 
@@ -56,7 +56,7 @@ para fazer qualquer alteração, neste caso um POST.
 + Response 400 (application/json)
     + Attributes (Erro)
 
-## Remover [/api/tool/remove/{id_tool}]
+## Remover [/api/tools/{id_tool}]
 + Parameters
     + id_tool: 1 (number, required) - ID da ferramenta
 
