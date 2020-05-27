@@ -5,14 +5,10 @@ const routes = express.Router()
 const vuttrController = require('../controllers/vuttrController')
 const middlewareAuth = require('../auth/middlewareAuth')
 
-routes.get('/tool/search/all', vuttrController.allTools)
-routes.get('/tool/search/', vuttrController.selectTool)
-routes.post('/tool/add', middlewareAuth.bearer, vuttrController.createTool)
-routes.delete(
-  '/tool/remove/:id',
-  middlewareAuth.bearer,
-  vuttrController.deleteTool,
-)
+routes.get('/tools', vuttrController.allTools)
+routes.get('/tools/tag', vuttrController.selectTool)
+routes.post('/tools', middlewareAuth.bearer, vuttrController.createTool)
+routes.delete('/tools/:id', middlewareAuth.bearer, vuttrController.deleteTool)
 
 routes.post('/account/register', vuttrController.register)
 routes.post('/account/login', middlewareAuth.local, vuttrController.login)
