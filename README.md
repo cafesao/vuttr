@@ -6,7 +6,7 @@ Essa API foi feita para um desafio de back-end para a empresa BossaBox.
 
 ## Para executar a API é muito fácil!
 
-0 - Se você deseja apenas acessar a API e fazer request, acesse o link via [Insomnia](https://insomnia.rest/) ou outro programa parecido, ec2-54-232-45-139.sa-east-1.compute.amazonaws.com:3000/api e siga a documentação para fazer suas requests.
+0 - A API foi implementada na nuvem, em um servidor AWS, mas já não se encontra mais online, por favor, caso você queira testar esta API utilize localmente, seguindo as instruções abaixo.
 
 1 - Verifique se você tem o [Docker](https://docs.docker.com/get-docker/) && [Docker-Compose](https://docs.docker.com/compose/install/), instalado em seu computador.
 
